@@ -15,9 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
     .vue({
         version: 2
     })
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ])
+    .postCss('resources/css/app.css', 'public/css')
     .options({
         hmrOptions: {
             host: '51.83.36.122',
