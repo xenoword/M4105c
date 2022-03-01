@@ -1,7 +1,13 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\OperateurController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UtilisateurController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+use App\Models\Ticket;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +21,20 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return Inertia::render("index");
+    return redirect("ticket");
 })->name("index");
 
-Route::get('/bonjour', function() {
-    return Inertia::render("bonjour");
-})->name("bonjour");
+Route::get('login', [LoginController::class, "displayLogin"])->name("login.view");
+Route::post('login', [LoginController::class, "login"])->name("login");
+
+Route::middleware("auth")->group(function () {
+    Route::get('ticket', [UserController::class, "displayUserTicket"])->name("userTicket");
+    Route::get('detailTicket', [UserController::class, 'displayTicket'])->name("detailUserTicket");
+
+    Route::get('ticketOperateur', [OperateurController::class, "DisplayTicketOperateur"])->name("ticketOperateur");
+
+    Route::get('ticketSaisiUser', function () {
+        return Inertia::render("ticketSaisiUser");
+    })->name("ticketSaisiUser");
+    Route::post('addTicket', [UserController::class, 'addTicket'])->name("addTicket");
+});
