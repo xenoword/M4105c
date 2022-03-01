@@ -21,7 +21,7 @@
             {{ticket.description}}
           </p>
             <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'userTicket'">Editer</b-button>
-            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'ticketOperateur'">Voir</b-button>
+            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'ticketOperateur'" click="">Voir</b-button>
           </b-col>
         </b-row>
       </b-container>
