@@ -14,8 +14,16 @@ Vue.use(IconsPlugin)
 Vue.prototype.$route = route;
 Vue.component("Link", Link);
 
+import Layout from './Layout/header'
+
 createInertiaApp({
-  resolve: name => require(`./Pages/${name}`),
+  resolve: name => {
+    const page = require(`./Pages/${name}`).default
+    if(name != "login"){
+      page.layout = page.layout || Layout
+    }
+    return page
+  },
   setup({ el, App, props, plugin }) {
     Vue.use(plugin)
 

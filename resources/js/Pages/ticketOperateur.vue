@@ -17,14 +17,13 @@
 
         <br><br>
 
-        <ticket-list-view :ticketList = "ticketList" class="ticketListView"></ticket-list-view>
+        <ticket-list-view :ticketList="ticketList" class="ticketListView"></ticket-list-view>
 
-       <!-- <br><br>
-
+       <!-- 
         <b-button>Envoyer à un autre opérateur</b-button>
-        <b-button>Voir</b-button>
         <b-button>Envoyer au responsable du service</b-button>
-        <b-button>Répertorier une intervention</b-button> -->
+        <b-button>Répertorier une intervention</b-button>
+         -->
 
     </div>
 </template>

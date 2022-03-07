@@ -2,10 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\PrecisionProbleme;
+use App\Models\Probleme;
 use App\Models\Ticket;
 use App\Models\TypeUser;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\CanResolve;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,13 +22,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         TypeUser::create([
-            "libelle_type_user" => "User"
+            "libelle" => "User"
         ]);
         TypeUser::create([
-            "libelle_type_user" => "Operator"
+            "libelle" => "Operator"
         ]);
         TypeUser::create([
-            "libelle_type_user" => "Manager"
+            "libelle" => "Manager"
         ]);
         User::create([
             "name" => "admin",
@@ -33,6 +36,91 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("admin"),
             "type_user_id" => 3
         ]);
+        User::create([
+            "name" => "user",
+            "email" => "user@user.com",
+            "password" => Hash::make("user"),
+            "type_user_id" => 1
+        ]);
+        User::create([
+            "name" => "operator",
+            "email" => "ope@ope.com",
+            "password" => Hash::make("ope"),
+            "type_user_id" => 2
+        ]);
+        Probleme::create([
+            "libelle"=>"Matériel"
+        ]);
+        Probleme::create([
+            "libelle"=>"Logiciel"
+        ]);
+        Probleme::create([
+            "libelle"=>"Utilisateur"
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Crash",
+            "probleme_id"=>1
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Dysfonctionnement",
+            "probleme_id"=>1
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Dégradation",
+            "probleme_id"=>1
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Vol",
+            "probleme_id"=>1
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Blocage",
+            "probleme_id"=>2
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Erreurs",
+            "probleme_id"=>2
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Fonction non disponible",
+            "probleme_id"=>2
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Problème de sauvegarde",
+            "probleme_id"=>2
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Licence expirée",
+            "probleme_id"=>2
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Connexion/Mot de passe",
+            "probleme_id"=>3
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Messagerie",
+            "probleme_id"=>3
+        ]);
+        PrecisionProbleme::create([
+            "libelle"=>"Accès au casiers",
+            "probleme_id"=>3
+        ]);
+        CanResolve::create([
+            "user_id" =>2,
+            "precision_probleme_id" =>1
+        ]);
+        CanResolve::create([
+            "user_id" =>2,
+            "precision_probleme_id" =>3
+        ]);
+        CanResolve::create([
+            "user_id" =>2,
+            "precision_probleme_id" =>8
+        ]);
+        CanResolve::create([
+            "user_id" =>2,
+            "precision_probleme_id" =>10
+        ]);
         Ticket::create([
             "description" => "Test description",
             "computer" => "S06",
@@ -42,7 +130,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => null,
-            "probleme_id" => null,
+            "probleme_id" => 1,
+            "precision_probleme_id"=> 1,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -54,7 +143,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => null,
-            "probleme_id" => null,
+            "probleme_id" => 1,
+            "precision_probleme_id"=> 3,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -66,7 +156,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 2,
+            "precision_probleme_id"=> 5,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -78,7 +169,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 2,
+            "precision_probleme_id"=> 6,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -90,7 +182,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 1,
+            "precision_probleme_id"=> 2,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -102,7 +195,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 3,
+            "precision_probleme_id"=> null,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -114,7 +208,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 3,
+            "precision_probleme_id"=> 12,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -126,7 +221,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 2,
+            "precision_probleme_id"=> 6,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -138,7 +234,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 3,
+            "precision_probleme_id"=> 11,
             "user_id" => 1
         ]);
         Ticket::create([
@@ -150,7 +247,8 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
-            "probleme_id" => null,
+            "probleme_id" => 3,
+            "precision_probleme_id"=> 10,
             "user_id" => 1
         ]);
     }

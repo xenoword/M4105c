@@ -23,14 +23,27 @@ class Ticket extends Model
         'comment',
         'date_start',
         'date_end',
-        'probleme_id'
+        'probleme_id',
+        "precision_probleme_id",
+        "user_id"
+    ];
+
+    protected $with = [
+      "probleme",
+      "user",
+      "problemePrecision"
     ];
 
     public function probleme(){
-        return $this->hasOne(Probleme::class, "probleme_id", 'id');
+        return $this->belongsTo(Probleme::class);
     }
+
+    public function problemePrecision(){
+        return $this->belongsTo(PrecisionProbleme::class,"precision_probleme_id", "id");
+    }
+
     public function user(){
-        return $this->hasOne(User::class, "user_id", 'id');
+        return $this->belongsTo(User::class, "user_id", 'id');
     }
 
     public function isurgent($urg){
@@ -43,4 +56,6 @@ class Ticket extends Model
         else
             return false;
     }
+
+    
 }

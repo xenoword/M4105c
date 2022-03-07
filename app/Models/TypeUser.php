@@ -11,4 +11,8 @@ class TypeUser extends Model
     protected $table = "type_users";
     protected $primaryKey = "id";
     public $timestamps = true;
+
+    protected $fillable = [
+        'libelle',
+    ];
 }

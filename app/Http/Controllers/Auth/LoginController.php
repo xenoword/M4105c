@@ -41,4 +41,9 @@ class LoginController extends Controller
             "password" => "Mot de passe incorrect"
         ]);
     }
+    public function disconnect(){
+        Auth::logout();
+        session(["user"=>null]);
+        return redirect("/");
+    }
 }

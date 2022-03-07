@@ -27,9 +27,20 @@ class CreateTicketsTable extends Migration
             $table->string('comment')->nullable();
             $table->timestamp('date_start');
             $table->timestamp('date_end')->nullable();
-            $table->foreignIdFor(Probleme::class)->nullable();
-            $table->foreignIdFor(User::class);
+            $table->integer("probleme_id")->nullable();
+            $table->integer("precision_probleme_id")->nullable();
+            $table->integer("user_id");
             $table->timestamps();
+
+            $table->foreign("probleme_id")->references("id")->on("problemes")
+                ->onUpdate("restrict")
+                ->onDelete("cascade");
+            $table->foreign("precision_probleme_id")->references("id")->on("precision_problemes")
+                ->onUpdate("restrict")
+                ->onDelete("cascade");
+            $table->foreign("user_id")->references("id")->on("users")
+                ->onUpdate("restrict")
+                ->onDelete("cascade");
         });
     }
 

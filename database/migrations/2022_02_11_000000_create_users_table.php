@@ -20,9 +20,13 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignIdFor(TypeUser::class);
+            $table->integer("type_user_id");
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign("type_user_id")->references("id")->on("type_users")
+                ->onUpdate("restrict")
+                ->onDelete("cascade");
         });
     }
 

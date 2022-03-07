@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ticket;
+use App\Models\Probleme;
+use App\Models\PrecisionProbleme;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -16,6 +18,30 @@ class UserController extends Controller
         return Inertia::render('ticketSaisiUser'); 
     }
 
+    public function displayEditTicket(Request $request, int $id) {
+        $ticket = Ticket::findOrFail($id);
+        $problemeList = Probleme::all();
+        $materialList = PrecisionProbleme::Where(function($query) use ($problemeList){
+            $query->where('id',$problemeList[0]->id);
+        })->get();
+        $softList = PrecisionProbleme::Where(function($query) use ($problemeList){
+            $query->where('id',$problemeList[1]->id);
+        })->get();
+        $userList = PrecisionProbleme::Where(function($query) use ($problemeList){
+            $query->where('id',$problemeList[2]->id);
+        })->get();
+
+        return Inertia::render("ticketSaisiUser",
+            [
+                "ticket" => $ticket,
+                "problemeList" => $problemeList,
+                "materialList" => $materialList,
+                "softList" => $softList,
+                "userList" => $userList
+            ]
+        );
+    }
+
     public function displayUserTicket(Request $request){
         $ticketList = Ticket::where(function($query) use ($request){
             if (isset($request->resolved)) {
@@ -25,6 +51,7 @@ class UserController extends Controller
                     $query->whereNull('date_end');
                 }
             }
+            $query->where("user_id", session("user")->id);
         })->orderByDesc('updated_at')->get();
         
         return Inertia::render("ticket", ['ticketList' => $ticketList]);
@@ -40,7 +67,7 @@ class UserController extends Controller
         $ticket->comment = null;
         $ticket->date_start = Date::now();
         $ticket->date_end = null;
-        $ticket->probleme_id = null;
+        $ticket->probleme_id = $request->input("probleme_id");
         $ticket->user_id = session("user")->id;
 
         $ticket->save();

@@ -62,6 +62,6 @@ export default {
 </script>
 <style scoped>
 .ticketListView{
-  max-height: 75vh;
+  max-height: 70vh;
 }
 </style>

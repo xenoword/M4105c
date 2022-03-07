@@ -5,16 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Probleme extends Model
+class PrecisionProbleme extends Model
 {
     use HasFactory;
 
-    protected $table = "problemes";
+    protected $table = "precision_problemes";
     protected $primaryKey = "id";
     public $timestamps = true;
 
     protected $fillable = [
         'libelle',
     ];
-    
 }

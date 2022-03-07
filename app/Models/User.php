@@ -24,6 +24,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type_user_id',
+    ];
+
+    protected $with = [
+        'typeUser'
     ];
 
     /**
@@ -46,6 +51,6 @@ class User extends Authenticatable
     ];
 
     public function typeUser(){
-        return $this->hasOne(TypeUser::class, "type_user_id", 'id');
+        return $this->belongsTo(TypeUser::class);
     }
 }

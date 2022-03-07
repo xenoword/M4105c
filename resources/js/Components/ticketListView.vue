@@ -13,15 +13,17 @@
           </b-col>
           <b-col>
           <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">Ticket Numéro {{ ticket.id_ticket }}</h5>
+            <h5 class="mb-1">Ticket Numéro {{ ticket.id }}</h5>
             <small >envoyé il y a {{ getDaySinceCreation(ticket) }} jour(s) et {{ getHourSinceCreation(ticket) }} heure(s)</small>
           </div>
 
           <p class="mb-1">
             {{ticket.description}}
           </p>
-            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'userTicket'">Editer</b-button>
-            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'ticketOperateur'" click="">Voir</b-button>
+            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'userTicket'" :href="$route('displayEditTicket',{id:ticket.id})">Editer</b-button>
+
+            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'ticketOperateur'" :href="$route('detailTicketOperateur', {id:ticket.id})" >Voir</b-button>
+
           </b-col>
         </b-row>
       </b-container>
