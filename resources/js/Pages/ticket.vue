@@ -14,7 +14,7 @@
       <b-col>
         <ticket-list-view :ticketList="ticketList" class="ticketListView"></ticket-list-view>
       </b-col>
-    </b-row>
+    </b-row> 
     <b-row class="mt-4">
       <b-col md="3" offset-md="8">
         <b-button variant="primary" :href="$route('ticketSaisiUser')">Nouveau ticket</b-button>
@@ -36,7 +36,7 @@ export default {
       defaultValue() {
         return [];
       },
-    },
+    }
   },
   mounted(){
     this.selected = this.$route().params.resolved ?? "tous";

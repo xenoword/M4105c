@@ -28,7 +28,8 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'typeUser'
+        'typeUser',
+        'canResolve'
     ];
 
     /**
@@ -52,5 +53,8 @@ class User extends Authenticatable
 
     public function typeUser(){
         return $this->belongsTo(TypeUser::class);
+    }
+    public function canResolve(){
+        return $this->belongsToMany(PrecisionProbleme::class, "can_resolve", "user_id", "precision_probleme_id");
     }
 }

@@ -18,7 +18,18 @@ class OperateurController extends Controller
 {
     public function DisplayTicketOperateur(Request $request){
 
+        $trie = 'asc';
+
+        if(isset($request->dateSort)){
+            if($request->dateSort == 'Plus ancients')
+                $trie = 'desc';
+            else
+                $trie = 'asc';
+        }
+
         $ticketList = Ticket::where(function($query) use ($request){
+
+            $query->where("operateur_id", session("user")->id);
 
             if(isset($request->resolved)){
 
@@ -28,7 +39,7 @@ class OperateurController extends Controller
                     $query->whereNull('date_end');
             }
             if(isset($request->urgence)){
-
+ 
                 if($request->urgence == 1)
                     $query->where('urgency','=',1);
                 if($request->urgence == 2)
@@ -40,17 +51,20 @@ class OperateurController extends Controller
                 if($request->urgence == 5)
                     $query->where('urgency','=',5);
             }
-        })->get();
+
+
+        })
+        ->orderBy('date_start', $trie)
+        ->get();
 
         return Inertia::render("ticketOperateur", ['ticketList' => $ticketList]);
     }
 
     public function DisplayListeOperateur(Request $request){
-
-        //$listOperateur = User::All();
-
         $listOperateur = User::where('type_user_id', 2)->get();
-        return Inertia::render("listOperateur", ['listOperateur' => $listOperateur]);
+        $ticket = Ticket::where('id', $request->input("id"))->get();
+
+        return Inertia::render("listOperateur", ['listOperateur' => $listOperateur, 'ticket' => $ticket]); 
     }
 
     public function DisplayDetailTicketOperateur(Request $request,int $id){
@@ -82,5 +96,33 @@ class OperateurController extends Controller
         return redirect("detailTicketOperateur/".$ticket->id);
     }
 
+    public function AddComment(Request $request, string $comment, string $id){
 
+        $ticket = Ticket::findOrFail((int) $id);
+
+        $ticket->comment = $comment;
+
+        $ticket->save();
+
+        return redirect("detailTicketOperateur/".$ticket->id);
+    }
+
+    public function DisplayOperators(Request $request,string $id){
+
+        $ticket = Ticket::findOrFail((int) $id);
+
+        $listOperateur = User::where('type_user_id', 2)->get();
+        
+        return Inertia::render("ticketRealocationOperator", ['ticket' => $ticket, 'listOperateur' => $listOperateur]);
+
+    }
+
+    public function ChangeTicketOperator(Request $request, string $ticketId, string $operatorId){
+
+        $ticket = Ticket::findOrFail((int) $ticketId);
+
+    
+
+
+    }
 }

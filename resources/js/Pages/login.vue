@@ -13,7 +13,7 @@
           form.errors.email
         }}</b>
       </div>
-
+ 
       <div class="formDiv">
         <label id="passwordLabel" for="password">Mot de passe :</label>
         <input id="password" type="password" v-model="form.password" />

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="formLogin">
-      <b-form @submit.prevent="ticket ? form.post($route('addTicket')): form.post($route('editTicket'))" @reset="onReset">
+      <b-form @submit.prevent="ticket ? form.post($route('editTicket')): form.post($route('addTicket'))" @reset="onReset">
         <b-form-group
           id="urgencyList"
           label="Numéro de poste :"
@@ -16,10 +16,11 @@
             required 
           ></b-form-input>
         </b-form-group>
+        <input type="hidden" v-model="form.id">
 
         <div>
-          <label for="comment">Description du problème :</label>
-          <textarea v-model="form.comment" name="comment" id="pb" cols="30" rows="10"></textarea>
+          <label for="description">Description du problème :</label>
+          <textarea v-model="form.description" name="description" id="pb" cols="30" rows="10"></textarea>
         </div>
 
         <div>
@@ -34,10 +35,10 @@
         <b-form-select name="probleme" v-model="form.probleme_id" :options="problemeList" text-field="libelle" value-field="id"></b-form-select>
 
         <label for="precision_probleme" v-if="form.probleme_id">Precision :</label>
-        <b-form-select name="precision_probleme" v-model="form.precisionProbleme_id" :options="materialList" text-field="libelle" value-field="id" v-if="form.probleme_id == '1'"></b-form-select>
-        <b-form-select name="precision_probleme" v-model="form.precisionProbleme_id"  :options="softList" text-field="libelle" value-field="id"    v-if="form.probleme_id == '2'"></b-form-select>
-        <b-form-select name="precision_probleme" v-model="form.precisionProbleme_id"  :options="userList" text-field="libelle" value-field="id"    v-if="form.probleme_id == '3'"></b-form-select>
-        <p>{{ userList }}</p>
+        <b-form-select name="precision_probleme" v-model="form.precision_probleme_id" :options="materialList" text-field="libelle" value-field="id" v-if="form.probleme_id == '1'"></b-form-select>
+        <b-form-select name="precision_probleme" v-model="form.precision_probleme_id"  :options="softList" text-field="libelle" value-field="id"    v-if="form.probleme_id == '2'"></b-form-select>
+        <b-form-select name="precision_probleme" v-model="form.precision_probleme_id"  :options="userList" text-field="libelle" value-field="id"    v-if="form.probleme_id == '3'"></b-form-select>
+
         <div class="button">
           <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>
@@ -60,10 +61,12 @@ export default {
   data() {
     return {
       form: this.$inertia.form({
+        id:this.ticket?.id ?? "",
         computer: this.ticket?.computer ?? "",
-        comment: this.ticket?.comment ?? "",
+        description: this.ticket?.description ?? "",
         urgency: this.ticket?.urgency ?? "",
         probleme_id: this.ticket?.probleme_id ?? "",
+        precision_probleme_id: this.ticket?.precision_probleme_id ?? ""
 
       }),
       urgencyList: [

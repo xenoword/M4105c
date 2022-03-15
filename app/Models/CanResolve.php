@@ -9,6 +9,6 @@ class CanResolve extends Model
 {
     use HasFactory;
     protected $table = "can_resolve";
-    protected $primaryKey = "user_id";
+    protected $primaryKey = "precision_probleme_id";
     public $timestamps = false;
 }

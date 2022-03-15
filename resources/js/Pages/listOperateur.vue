@@ -1,19 +1,22 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col offset-md="1">
-        <h1>Les Opérateur</h1>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col>
-        <operateur-list-view
-          :listOperateur="listOperateur"
-          class="operateurListView"
-        ></operateur-list-view>
-      </b-col>
-    </b-row>
-  </b-container>
+  <div>
+    <b-container>
+      {{ ticket }}
+      <b-row>
+        <b-col offset-md="1">
+          <h1>Les Opérateur</h1>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <operateur-list-view
+            :listOperateur="listOperateur"
+            class="operateurListView"
+          ></operateur-list-view>
+        </b-col>
+      </b-row>
+    </b-container>
+  </div>
 </template>
 
 <script>
@@ -29,6 +32,9 @@ export default {
       defaultValue() {
         return [];
       },
+    },
+    ticket: {
+      type: Object,
     },
   },
   data() {

@@ -21,7 +21,7 @@
             {{ticket.description}}
           </p>
             <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'userTicket'" :href="$route('displayEditTicket',{id:ticket.id})">Editer</b-button>
-
+            <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'listTicketUnassigned'" :href="$route('listOperateur',{id:ticket.id})">Attribuer à un Opérateur</b-button>
             <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'ticketOperateur'" :href="$route('detailTicketOperateur', {id:ticket.id})" >Voir</b-button>
 
           </b-col>

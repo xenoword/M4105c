@@ -14,6 +14,8 @@ class PrecisionProbleme extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'id',
         'libelle',
+        'probleme_id'
     ];
 }

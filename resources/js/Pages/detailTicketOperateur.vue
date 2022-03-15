@@ -15,13 +15,13 @@
         </div>
 
         <div>
-            <p>Urgence du problème : </p>
+            <p>Urgence du problème (1 : pas urgent 5 : très urgent) : </p>
             <p>{{ticket.urgency}}</p>
         </div>
 
         <div>
             <p>Type de problème : </p>
-            <p>{{ticket.probleme.libelle}} : {{ticket.probleme_precision.libelle_precision_probleme}}</p>
+            <p>{{ticket.probleme.libelle}} : {{ticket.probleme_precision.libelle}}</p>
         </div>
 
         <div>
@@ -54,26 +54,28 @@
             <b-button v-b-modal.modal-prevent-addComment>Ajouter un commentaire</b-button>
 
             <b-modal
-            id="modal-prevent-addComment"
-            ref="modal"
-            title="Saisissez votre commentaire"
-            @ok="handleOkAddComment">
+                id="modal-prevent-addComment"
+                ref="modal"
+                title="Saisissez votre commentaire"
+                @ok="handleOkAddComment">
                 <form ref="form" @submit.stop.prevent="handleSubmit">
+
                     <b-form-group
-                    label="Comment"
-                    label-for="comment-input"
-                    invalid-feedback="Saisissez votre commentaire"
-                    :state="nameState">
+                        label="Comment"
+                        label-for="comment-input"
+                        invalid-feedback="Saisissez votre commentaire">
 
                         <b-form-input
                         id="comment-input"
-                        v-model="name"
-                        :state="nameState"
+                        v-model="comment"
                         required></b-form-input>
 
                     </b-form-group>
+
                 </form>
             </b-modal>
+
+            <b-button :href="$route('ticketReallocationOperator', {id:ticket.id})">Envoyer à un autre opérateur</b-button>
         </div>
 
     </div>
@@ -81,7 +83,12 @@
 
 <script>
 export default {
-    name: "TicketDetail",
+    name: "TicketDetailOperator",
+    data() {
+      return {
+        comment: ''
+      }
+    },
     props: {
         ticket : Object
     },
@@ -92,7 +99,7 @@ export default {
         },
 
         handleOkAddComment(){
-            
+            this.$inertia.post('/addCommentOperator/'+this.comment+'/'+this.ticket.id);
         }
 
     }

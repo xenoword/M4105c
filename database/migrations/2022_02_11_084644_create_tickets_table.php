@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('computer');
             $table->string('link_attached_file')->nullable();
             $table->integer('urgency');
@@ -30,6 +30,7 @@ class CreateTicketsTable extends Migration
             $table->integer("probleme_id")->nullable();
             $table->integer("precision_probleme_id")->nullable();
             $table->integer("user_id");
+            $table->integer("operateur_id")->nullable();
             $table->timestamps();
 
             $table->foreign("probleme_id")->references("id")->on("problemes")
@@ -39,6 +40,9 @@ class CreateTicketsTable extends Migration
                 ->onUpdate("restrict")
                 ->onDelete("cascade");
             $table->foreign("user_id")->references("id")->on("users")
+                ->onUpdate("restrict")
+                ->onDelete("cascade");
+            $table->foreign("operateur_id")->references("id")->on("users")
                 ->onUpdate("restrict")
                 ->onDelete("cascade");
         });

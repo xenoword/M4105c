@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\TypeUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -33,7 +34,16 @@ class LoginController extends Controller
             $user = User::where('email', $request->input("email"))->first();
             session(["user"=>$user]);
 
-            return redirect()->intended('ticket');
+            $typeUserList = TypeUser::all();
+            if (session('user')->typeUser == $typeUserList[0]) {//user
+                return redirect()->intended("ticket");
+            }else if (session('user')->typeUser == $typeUserList[1]) {//operateur
+                return redirect()->intended("ticketOperateur");
+            }else if (session('user')->typeUser == $typeUserList[2]) {//manager
+                return redirect()->intended('listOperateur');
+            }else if (session('user')->typeUser == $typeUserList[3]) {//admin
+                return redirect()->intended('ticket');
+            }
         }
 
         return back()->withErrors([
