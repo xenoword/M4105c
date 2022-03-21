@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->string('computer');
             $table->string('link_attached_file')->nullable();
             $table->integer('urgency');
@@ -27,6 +27,7 @@ class CreateTicketsTable extends Migration
             $table->string('comment')->nullable();
             $table->timestamp('date_start');
             $table->timestamp('date_end')->nullable();
+            $table->timestamp('date_end_guess')->nullable();
             $table->integer("probleme_id")->nullable();
             $table->integer("precision_probleme_id")->nullable();
             $table->integer("user_id");

@@ -153,10 +153,11 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => null,
+            "date_end_guess" => null,
             "probleme_id" => 1,
             "precision_probleme_id"=> 1,
-            "user_id" => 1,
-            "operateur_id" => null
+            "user_id" => 2,
+            "operateur_id" => 3
         ]);
         Ticket::create([
             "description" => "Test description",
@@ -167,9 +168,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => null,
+            "date_end_guess" => null,
             "probleme_id" => 1,
             "precision_probleme_id"=> 3,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -181,9 +183,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 2,
             "precision_probleme_id"=> 5,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -195,9 +198,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 2,
             "precision_probleme_id"=> 6,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -209,9 +213,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 1,
             "precision_probleme_id"=> 2,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -223,9 +228,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 3,
             "precision_probleme_id"=> null,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -237,9 +243,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 3,
             "precision_probleme_id"=> 12,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -251,9 +258,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 2,
             "precision_probleme_id"=> 6,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -265,9 +273,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 3,
             "precision_probleme_id"=> 11,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
         Ticket::create([
@@ -279,9 +288,10 @@ class DatabaseSeeder extends Seeder
             "comment" => null,
             "date_start" => Date::now(),
             "date_end" => Date::now(),
+            "date_end_guess" => null,
             "probleme_id" => 3,
             "precision_probleme_id"=> 10,
-            "user_id" => 1,
+            "user_id" => 2,
             "operateur_id" => null
         ]);
     }

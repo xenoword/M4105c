@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import ticketListView from "../Components/ticketListView.vue";
+import ticketListView from "../Components/ticketListView.vue"; 
 export default {
   name: "Ticket",
   components: {

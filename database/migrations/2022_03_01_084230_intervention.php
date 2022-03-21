@@ -14,12 +14,12 @@ class Intervention extends Migration
     public function up()
     {
         Schema::create("intervention", function(Blueprint $table){
+            $table->id();
             $table->integer("user_id");
             $table->integer("ticket_id");
             $table->timestamp("date_intervention");
             $table->string("description_intervention");
-
-            $table->primary(["user_id", "ticket_id"]);
+            $table->timestamps();
 
             $table->foreign("user_id")->references("id")->on("users")
                 ->onUpdate("restrict")

@@ -1,16 +1,17 @@
 <template>
   <div>
     <b-container>
-      {{ ticket }}
       <b-row>
         <b-col offset-md="1">
-          <h1>Les Opérateur</h1>
+          <h1>Les Opérateurs</h1>
         </b-col>
       </b-row>
       <b-row>
         <b-col>
           <operateur-list-view
             :listOperateur="listOperateur"
+            :ticket="ticket"
+            :countTicket="countTicket"
             class="operateurListView"
           ></operateur-list-view>
         </b-col>
@@ -34,6 +35,9 @@ export default {
       },
     },
     ticket: {
+      type: Object,
+    },
+    countTicket: {
       type: Object,
     },
   },

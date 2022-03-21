@@ -81,12 +81,15 @@ class UserController extends Controller
 
     public function addTicket(Request $request){
         $ope = null;
-        $allOperateur =User::where("type_user_id", 2)->get();
+        $ticketCountMin = 3;// Mettre ici le nombre max de ticket pour un opérateur
+        $ticketCountOpe = 0;
+        $allOperateur = User::where("type_user_id", 2)->get();
         foreach($allOperateur as $operateur){
+            $ticketCountOpe = Ticket::where("operateur_id", $operateur->id)->get()->count();
             foreach($operateur->canResolve as $canResolve){
-                if($request->input("precision_probleme_id") == $canResolve->id){
+                if($request->input("precision_probleme_id") == $canResolve->id && $ticketCountOpe < $ticketCountMin){
                     $ope = $operateur->id;
-                    break;
+                    $ticketCountMin = $ticketCountOpe;
                 }
             }
         }

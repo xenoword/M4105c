@@ -1,31 +1,43 @@
 <template>
-    <div>
-        <h1>Mes tickets</h1>
-        <br>
+    <b-container>
+        <b-row>
+            <b-col offset-md="1">
+                <h1>Mes tickets</h1>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col md="2">
+                <label for="emeteur">Emeteur : </label>
+            </b-col>
+            <b-col md="3">
+                <b-form-select id="emeteur" v-model="selectedEmeteur" :options="optionsEmeteur" text-field="name" value-field="id">
+                    <b-form-select-option :value="0">Tous</b-form-select-option>
+                </b-form-select>
+            </b-col>
+            <b-col md="4">
+                <label for="dateSort">Trie en fonction de la date de création : </label>
+            </b-col>
+            <b-col md="3">
+                <b-form-select id="dateSort" v-model="selectedDateSort" :options="optionsDateSort"></b-form-select>
+            </b-col>
 
-        <label for="emeteur">Emeteur : </label>
-        <b-form-select id="emeteur" v-model="selectedEmeteur" :options="optionsEmeteur"></b-form-select>
+            <b-col md="4">
+                <label for="urgence">Urgence (1 : pas urgent 5 : très urgent) : </label>
+            </b-col>
+            <b-col md="3">
+                <b-form-select id="urgence" v-model="selectedUrgence" :options="optionsUrgence"></b-form-select>
+            </b-col>
+            <b-col md="2">
+                <label for="statut">Statut : </label>
+            </b-col>
+            <b-col md="3">
+                <b-form-select id="statut" v-model="selectedStatut" :options="optionsStatut"></b-form-select>
+            </b-col>
 
-        <label for="statut">Statut : </label>
-        <b-form-select id="statut" v-model="selectedStatut" :options="optionsStatut"></b-form-select>
-
-        <label for="urgence">Urgence (1 : pas urgent 5 : très urgent) : </label>
-        <b-form-select id="urgence" v-model="selectedUrgence" :options="optionsUrgence"></b-form-select>
-
-        <label for="dateSort">Trie en fonction de la date de création : </label>
-        <b-form-select id="dateSort" v-model="selectedUrgence" :options="optionsDateSort"></b-form-select>
-
-        <br><br>
-
+        </b-row>
         <ticket-list-view :ticketList="ticketList" class="ticketListView"></ticket-list-view>
 
-       <!-- 
-        <b-button>Envoyer à un autre opérateur</b-button>
-        <b-button>Envoyer au responsable du service</b-button>
-        <b-button>Répertorier une intervention</b-button>
-         -->
-
-    </div>
+    </b-container>
 </template>
 
 <script>
@@ -41,9 +53,16 @@ export default {
             defaultValue(){
                 return [];
             }
+        },
+        optionsEmeteur: {
+            type : Array,
+            defaultValue(){
+                return [/*{value: 'tous', text: 'Tous'}*/];
+            }
         }
     },
     mounted(){
+        this.selectedEmeteur = this.$route().params.emeteur ?? "0";
         this.selectedStatut = this.$route().params.resolved ?? "Tous";
         this.selectedUrgence = this.$route().params.urgence ?? "Tous";
         this.selectedDateSort = this.$route().params.dateSort ?? "Plus recents";
@@ -63,19 +82,22 @@ export default {
             this.$inertia.reload({ data: {
                 dateSort : this.selectedDateSort
             }})
+        },
+        selectedEmeteur: function(){
+            this.$inertia.reload({ data: {
+                emeteur : this.selectedEmeteur
+            }})
         }
     },
     data(){
         return {
             selectedEmeteur: 'Tous',
-            optionsEmeteur: [
-                { value: 'Tous', text: 'Tous' }
-            ],
+            
             selectedStatut: 'Tous',
             optionsStatut: [
                 {value: 'Tous', text: 'Tous'},
-                {value: 'Résolus', text: 'Résolus'},
-                {value: 'Non résolus', text: 'Non résolus'}
+                {value: 'Résolus', text: 'Fermé'},
+                {value: 'Non résolus', text: 'Ouvert'}
             ],
             selectedUrgence: 'Tous',
             optionsUrgence: [
@@ -99,6 +121,6 @@ export default {
 
 <style scoped>
 .ticketListView{
-    max-height: 49vh;
+    max-height: 80vh;
 }
 </style>

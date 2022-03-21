@@ -23,6 +23,7 @@ class Ticket extends Model
         'comment',
         'date_start',
         'date_end',
+        'date_end_guess',
         'probleme_id',
         "precision_probleme_id",
         "user_id"
