@@ -24,6 +24,7 @@ class Ticket extends Model
         'date_start',
         'date_end',
         'date_end_guess',
+        'solved',
         'probleme_id',
         "precision_probleme_id",
         "user_id"

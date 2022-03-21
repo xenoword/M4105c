@@ -10,8 +10,8 @@
                 <label for="emeteur">Emeteur : </label>
             </b-col>
             <b-col md="3">
-                <b-form-select id="emeteur" v-model="selectedEmeteur" :options="optionsEmeteur" text-field="name" value-field="id">
-                    <b-form-select-option :value="0">Tous</b-form-select-option>
+                <b-form-select id="emeteur" v-model="selectedEmeteur" :options="optionsEmeteurFormated" text-field="name" value-field="id">
+                    <!-- <b-form-select-option :value="0">Tous</b-form-select-option> -->
                 </b-form-select>
             </b-col>
             <b-col md="4">
@@ -21,18 +21,19 @@
                 <b-form-select id="dateSort" v-model="selectedDateSort" :options="optionsDateSort"></b-form-select>
             </b-col>
 
-            <b-col md="4">
-                <label for="urgence">Urgence (1 : pas urgent 5 : très urgent) : </label>
-            </b-col>
-            <b-col md="3">
-                <b-form-select id="urgence" v-model="selectedUrgence" :options="optionsUrgence"></b-form-select>
-            </b-col>
             <b-col md="2">
                 <label for="statut">Statut : </label>
             </b-col>
             <b-col md="3">
                 <b-form-select id="statut" v-model="selectedStatut" :options="optionsStatut"></b-form-select>
             </b-col>
+            <b-col md="4">
+                <label for="urgence">Urgence (1 : pas urgent 5 : très urgent) : </label>
+            </b-col>
+            <b-col md="3">
+                <b-form-select id="urgence" v-model="selectedUrgence" :options="optionsUrgence"></b-form-select>
+            </b-col>
+            
 
         </b-row>
         <ticket-list-view :ticketList="ticketList" class="ticketListView"></ticket-list-view>
@@ -57,15 +58,23 @@ export default {
         optionsEmeteur: {
             type : Array,
             defaultValue(){
-                return [/*{value: 'tous', text: 'Tous'}*/];
+                return [];
             }
         }
     },
     mounted(){
-        this.selectedEmeteur = this.$route().params.emeteur ?? "0";
+        this.selectedEmeteur = this.$route().params.emeteur && this.$route().params.emeteur !== "" ? this.$route().params.emeteur : null;
         this.selectedStatut = this.$route().params.resolved ?? "Tous";
         this.selectedUrgence = this.$route().params.urgence ?? "Tous";
         this.selectedDateSort = this.$route().params.dateSort ?? "Plus recents";
+    },
+    computed: {
+        optionsEmeteurFormated(){
+            return [
+                {id:null, name:"Tous"},
+                ...this.optionsEmeteur
+            ]
+        }
     },
     watch: {
         selectedStatut: function(){
@@ -91,7 +100,7 @@ export default {
     },
     data(){
         return {
-            selectedEmeteur: 'Tous',
+            selectedEmeteur: null,
             
             selectedStatut: 'Tous',
             optionsStatut: [

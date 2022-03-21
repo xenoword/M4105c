@@ -17,6 +17,7 @@ use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Facades\DB;
 use App\Models\Probleme;
 use App\Models\PrecisionProbleme;
+use phpDocumentor\Reflection\Types\Boolean;
 
 class OperateurController extends Controller
 {
@@ -82,7 +83,7 @@ class OperateurController extends Controller
             $countTicket[$ope->id] = Ticket::where("operateur_id", $ope->id)->get()->count();
         }
 
-        return Inertia::render("listOperateur", ['listOperateur' => $listOperateur, 'ticket' => $ticket, "countTicket" => $countTicket]);
+        return Inertia::render("listOperateur", ['listOperateur' => $listOperateur, 'ticket' => $ticket]);
     }
 
 
@@ -121,6 +122,11 @@ class OperateurController extends Controller
     {
         $ticket = Ticket::findOrFail($id);
         $ticket->operateur_id = null;
+        if ($ticket->redirection >= 3) {
+            $resp = User::Where('type_user_id', 3)->get()->first();
+            $ticket->operateur_id = $resp->id;
+        }
+        
         $ticket->save();
 
         return redirect("ticketOperateur");
@@ -144,10 +150,11 @@ class OperateurController extends Controller
         $today = Date::now();
 
         $ticket->date_end = $today;
+        $ticket->solved = $request->solved;
 
         $ticket->save();
 
-        return redirect("detailTicketOperateur/" . $ticket->id);
+        return redirect("/");
     }
 
     public function AddComment(Request $request, string $comment, string $id)
@@ -178,12 +185,12 @@ class OperateurController extends Controller
 
     public function ChangeTicketOperator(Ticket $ticket, string $operatorId)
     {
-
         $ticket->operateur_id = $operatorId;
+        $ticket->redirection += 1; 
 
         $ticket->save();
 
-        return redirect("ticketOperateur/");
+        return redirect("/");
     }
 
     public function AddIntervention(Request $request)
@@ -215,13 +222,14 @@ class OperateurController extends Controller
     public function ModifyTicketOperator(Request $request)
     {
 
-        if (isset($request->problemId) && isset($request->precisionProblemId) && isset($request->ticketUrgency) && isset($request->ticketId)) {
+        if (isset($request->problemId) && isset($request->precisionProblemId) && isset($request->ticketUrgency) && isset($request->ticketId) && isset($request->date_end_guess)) {
 
             $ticket = Ticket::findOrFail($request->ticketId);
 
             $ticket->probleme_id = $request->problemId;
             $ticket->precision_probleme_id = $request->precisionProblemId;
             $ticket->urgency = $request->ticketUrgency;
+            $ticket->date_end_guess = $request->date_end_guess;
 
             $ticket->save();
 

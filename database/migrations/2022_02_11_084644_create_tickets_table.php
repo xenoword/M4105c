@@ -28,6 +28,7 @@ class CreateTicketsTable extends Migration
             $table->timestamp('date_start');
             $table->timestamp('date_end')->nullable();
             $table->timestamp('date_end_guess')->nullable();
+            $table->boolean('solved')->default(false);
             $table->integer("probleme_id")->nullable();
             $table->integer("precision_probleme_id")->nullable();
             $table->integer("user_id");

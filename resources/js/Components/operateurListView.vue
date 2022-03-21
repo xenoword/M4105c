@@ -25,7 +25,7 @@
               </div>
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">
-                  Nombre de ticket en cours : {{ countTicket[operateur.id] }}
+                  Nombre de ticket en cours : {{ operateur.ticket_list.length }}
                 </h5>
               </div>
               <h5 class="mb-1">Compétences :</h5>
@@ -42,8 +42,14 @@
                 class="float-right"
                 variant="outline-primary"
                 v-if="$route().current() == 'listOperateur'"
-                >Attribuer</b-button
-              >
+                :href="
+                  $route('relocateTicketOperator', {
+                    ticket: ticket.id,
+                    operatorId: operateur.id,
+                  })
+                "
+                >Attribuer</b-button>
+                
               <b-button
                 class="float-right"
                 variant="outline-primary"
@@ -81,9 +87,6 @@ export default {
       required: true,
     },
     ticket: {
-      type: Object,
-    },
-    countTicket: {
       type: Object,
     },
   },

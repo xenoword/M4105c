@@ -3,9 +3,13 @@
     <b-list-group-item v-for="ticket in ticketList" :key="ticket.id" class="element">
       <b-container>
         <b-row>
-          <b-col cols="1" v-if="ticket.date_end != null">
+          <b-col cols="1" v-if="ticket.date_end != null && ticket.solved == true">
             <b-icon icon="check" variant="success" shift-h="-4" font-scale="6" ></b-icon>
-            <p>Fermé</p>
+            <p>Fermé et résolu</p>
+          </b-col>
+          <b-col cols="1" v-if="ticket.date_end != null && ticket.solved == false">
+            <b-icon icon="x" variant="danger" shift-h="-4" font-scale="6" ></b-icon>
+            <p>Fermé mais non résolu</p>
           </b-col>
           <b-col cols="1" v-if="ticket.date_end == null">
             <b-icon icon="x" variant="danger" shift-h="-4" font-scale="6" v-if="ticket.date_end == null"></b-icon>
@@ -15,8 +19,8 @@
           <b-col>
           <div class="d-flex w-100 justify-content-between">
             <h5 class="mb-1">Ticket Numéro {{ ticket.id }}</h5>
-            <small class="float-right" v-if="ticket.date_end_guess" >résolution prévu le : {{ getDateEnd(ticket) }} jour(s)</small>
-            <small >envoyé il y a {{ getDaySinceCreation(ticket) }} jour(s) et {{ getHourSinceCreation(ticket) }} heure(s)</small>
+            <small class="float-right" v-if="ticket.date_end_guess" >Résolution prévu le : {{ getDateEnd(ticket) }}</small>
+            <small >Envoyé il y a {{ getDaySinceCreation(ticket) }} jour(s) et {{ getHourSinceCreation(ticket) }} heure(s)</small>
           </div>
 
           <p class="mb-1">
@@ -24,12 +28,10 @@
           </p>
           <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'userTicket' && ticket.date_end == null" :href="$route('displayEditTicket',{id:ticket.id})">Editer</b-button>
           <b-button class="float-right" variant="outline-primary" v-if="$route().current() == 'listTicketUnassigned'" :href="$route('listOperateur',{id:ticket.id})">Attribuer à un Opérateur</b-button>
+          <b-button variant="outline-primary" class="float-right" v-if="$route().current() == 'ticketOperateur' || $route().current() == 'userTicket'" :href="$route('detailTicketOperateur', {id:ticket.id})" >Voir</b-button>
           <div class="float-right" v-if="$route().current() == 'ticketOperateur'">
             <b-button variant="outline-primary" v-if="!ticket.date_end_guess" v-b-modal.modal-take-over-ticket @click="form.id = ticket.id">prendre en charge</b-button>
-            <b-button variant="outline-danger" v-if="!ticket.date_end_guess" :href="$route('abortTicket',{id:ticket.id})">incompétent</b-button>
-            <b-button variant="outline-primary" v-if="$route().current() == 'ticketOperateur'" :href="$route('detailTicketOperateur', {id:ticket.id})" >Voir</b-button>
-
-            
+            <b-button variant="outline-danger" v-if="!ticket.date_end_guess && $page.props.auth.user.type_user_id != 3" :href="$route('abortTicket',{id:ticket.id})">incompétent</b-button>
           </div>
           </b-col>
         </b-row>

@@ -29,7 +29,8 @@ class User extends Authenticatable
 
     protected $with = [
         'typeUser',
-        'canResolve'
+        'canResolve',
+        'ticketList'
     ];
 
     /**
@@ -56,5 +57,9 @@ class User extends Authenticatable
     }
     public function canResolve(){
         return $this->belongsToMany(PrecisionProbleme::class, "can_resolve", "user_id", "precision_probleme_id");
+    }
+
+    public function ticketList(){
+        return $this->hasMany(Ticket::class, 'operateur_id', 'id');
     }
 }
