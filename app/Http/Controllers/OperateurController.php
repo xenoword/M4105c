@@ -28,9 +28,9 @@ class OperateurController extends Controller
 
         if (isset($request->dateSort)) {
             if ($request->dateSort == 'Plus ancients')
-                $trie = 'desc';
-            else
                 $trie = 'asc';
+            else
+                $trie = 'desc';
         }
 
         $ticketList = Ticket::where(function ($query) use ($request) {

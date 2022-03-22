@@ -35,10 +35,10 @@
               <b-badge pill variant="secondary">
                 Proportion de ticket résolu:<strong>
                   {{
-                    (this.ticketClose.length /
+                    Math.round((this.ticketClose.length /
                       (this.ticketCloseNotSolved.length +
                         this.ticketClose.length)) *
-                    100
+                    100)
                   }}%</strong
                 >
               </b-badge>
