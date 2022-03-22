@@ -1,9 +1,49 @@
 <template>
   <div>
     <b-container>
-      <b-row>
-        <b-col offset-md="2" md="8">
+      <b-row class="w-100">
+        <b-col offset-md="0" md="6">
           <canvas id="myChart" width="400" height="400"></canvas>
+        </b-col>
+        <b-col>
+          <b-container>
+            <b-row offset-md="0" class="element">
+              <b-badge variant="info" pill>
+                Nombre d'opérateur: <strong>{{ operateur.length }}</strong>
+              </b-badge>
+            </b-row>
+            <b-row offset-md="0" class="element">
+              <b-badge pill variant="danger"
+                >Nombre total de ticket:<strong>
+                  {{
+                    this.ticketOpen.length + this.ticketInProgress.length
+                  }}</strong
+                >
+              </b-badge>
+            </b-row>
+            <b-row offset-md="0" class="element">
+              <b-badge pill variant="warning">
+                Nombre moyen de ticket par opérateur:<strong>
+                  {{
+                    this.ticketOpen.length +
+                    this.ticketInProgress.length / operateur.length
+                  }}</strong
+                >
+              </b-badge>
+            </b-row>
+            <b-row offset-md="0" class="element">
+              <b-badge pill variant="secondary">
+                Proportion de ticket résolu:<strong>
+                  {{
+                    (this.ticketClose.length /
+                      (this.ticketCloseNotSolved.length +
+                        this.ticketClose.length)) *
+                    100
+                  }}%</strong
+                >
+              </b-badge>
+            </b-row>
+          </b-container>
         </b-col>
       </b-row>
     </b-container>
@@ -27,30 +67,28 @@ export default {
         return [];
       },
     },
-    user: {
-      type: Array,
-      defaultValue() {
-        return [];
-      },
-    },
+  },
+  data() {
+    return {
+      ticketClose: [],
+      ticketCloseNotSolved: [],
+      ticketOpen: [],
+      ticketInProgress: [],
+    };
   },
   mounted() {
-    let ticketClose = [];
-    let ticketCloseNotSolved = [];
-    let ticketOpen = [];
-    let ticketInProgress = [];
     this.ticket.forEach((element) => {
       if (element.date_end == null) {
         if (element.operateur_id == null) {
-          ticketOpen.push(element);
+          this.ticketOpen.push(element);
         } else {
-          ticketInProgress.push(element);
+          this.ticketInProgress.push(element);
         }
       } else if (element.date_end != null) {
         if (element.solved == false) {
-          ticketCloseNotSolved.push(element);
+          this.ticketCloseNotSolved.push(element);
         } else {
-          ticketClose.push(element);
+          this.ticketClose.push(element);
         }
       }
     });
@@ -68,10 +106,10 @@ export default {
         datasets: [
           {
             data: [
-              ticketOpen.length,
-              ticketClose.length,
-              ticketInProgress.length,
-              ticketCloseNotSolved.length,
+              this.ticketOpen.length,
+              this.ticketClose.length,
+              this.ticketInProgress.length,
+              this.ticketCloseNotSolved.length,
             ],
             backgroundColor: [
               "rgba(255, 0, 0, 0.5)",
@@ -102,3 +140,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+.element {
+  margin: 10px;
+}
+</style>

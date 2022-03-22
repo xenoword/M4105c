@@ -21,7 +21,6 @@ class ManagerController extends Controller
     {
         $ticket = Ticket::all();
         $operateur = User::where("type_user_id", 2)->get();
-        $user = User::where("type_user_id", 1)->get();
-        return Inertia::render("chart", ["ticket" => $ticket, "operateur" => $operateur, "user" => $user]);
+        return Inertia::render("chart", ["ticket" => $ticket, "operateur" => $operateur]);
     }
 }
